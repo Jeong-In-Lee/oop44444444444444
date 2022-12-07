@@ -501,13 +501,13 @@ public:
         chEmpty(rBoundary, i, hei, min, max);
 
         if (*hei < rBoundary && *min < *max) {
-            for (int i = *hei; i <= rBoundary; i++) {
+            for (int k = *hei; k <= rBoundary; k++) {
                 for (int j = *min; j <= *max; j++) {
                     //�Ͷ߸���
-                    if (brd[i][j].getChflag() == -2)
+                    if (brd[k][j].getChflag() == -2)
                     {
-                        brd[i][j].setExist(false);
-                        brd[i][j].setColor(d3d::MAGENTA);
+                        brd[k][j].setExist(false);
+                        brd[k][j].setColor(d3d::MAGENTA);
                         hit++;
                     }
                 }
