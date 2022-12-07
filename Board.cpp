@@ -77,15 +77,6 @@ public:
         //�ٿ���� �� ����ϴ� �ݺ���
         int hit = 0;
         
-        /*for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
-            if (brd[rBoundary][i].getExist())
-                break;
-            else if (i == sizeof(brd[0]) / sizeof(CSphere) && (!brd[rBoundary][i].getExist())) {
-                i = -1;
-                rBoundary--;
-
-            }
-        }*/
         // �Ͷ߸��� �ݺ���
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
@@ -98,6 +89,17 @@ public:
                 }
             }
         }
+        
+        for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
+            if (brd[rBoundary][i].getExist())
+                break;
+            else if (i == sizeof(brd[0]) / sizeof(CSphere)-1 && (!brd[rBoundary][i].getExist())) {
+                i = -1;
+                rBoundary--;
+
+            }
+        }
+        
         return hit;
     }
 
@@ -401,6 +403,14 @@ public:
                 brd[m + 1][n + 1].revColor(ball.getColor());
                 brd[m + 1][n + 1].setChflag(0);
                 break;
+            }
+        }
+        
+        for (int i = sizeof(brd)/sizeof(brd[0]); i>= rBoundary; i--) {
+            for (int j = 0; h<sizeof(brd[0])/sizeof(CSphere); j++) {
+                if (brd[i][j].getExist) {
+                    rBoundary = i;
+                }
             }
         }
 
