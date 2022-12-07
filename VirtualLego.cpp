@@ -348,7 +348,8 @@ bool Display(float timeDelta)
             g_shoot_ball[shootnum - 1].ballUpdate(timeDelta);
         }
 
-        for (i = 0; i < 3; i++) {
+        for  ( i = 1; i < 3; i++) {
+
             g_legowall[i].hitBy(g_shoot_ball[shootnum - 1]);
         }
 
