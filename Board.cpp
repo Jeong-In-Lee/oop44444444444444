@@ -99,6 +99,9 @@ public:
                     }
                 }
             }
+            
+            hit += bDetach();
+            
         }
         else
         {
