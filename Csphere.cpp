@@ -9,7 +9,6 @@ CSphere::CSphere(void)
     m_velocity_z = 0;
     m_pSphereMesh = NULL;
 
-    chflag = 0;
 }
 
 CSphere::~CSphere(void) {}
@@ -247,7 +246,7 @@ void CSphere::setExist(bool a)
 }
 
 int CSphere::getChflag() {
-    return chflag;
+    return this->chflag;
 }
 
 void CSphere::setChflag(int val) {

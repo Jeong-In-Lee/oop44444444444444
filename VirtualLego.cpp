@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cmath>  
 #include <string>  
+#include<string.h>
 #include "CWall.h"
 #include "Csphere.h"
 #include "Board.cpp"
@@ -43,7 +44,6 @@ D3DXMATRIX g_mProj;
 #define M_HEIGHT 0.01
 #define DECREASE_RATE 0.9982
 #define SHOOTNUM 10  // 제한 횟수
-
 
 
 // -----------------------------------------------------------------------------
@@ -354,6 +354,9 @@ bool Display(float timeDelta)
 
 
         bool loopcheck = true;
+        int  tColor= g_shoot_ball[shootnum - 1].getColor();
+        int tx = -1;  
+        int ty = -1;
 
         for (i = 0; i < makeBoard.getRow(); i++) {
             if (!loopcheck) {
@@ -361,14 +364,26 @@ bool Display(float timeDelta)
             }
             for (j = 0; j < makeBoard.getCol(); j++) {
                 if (makeBoard.getBall(i, j).getExist()) {
-                    if (makeBoard.getBall(i, j).hasIntersected(g_shoot_ball[shootnum - 1])) {
-                        //i,j
+                    if (makeBoard.getBall(i, j).hasIntersected(g_shoot_ball[shootnum - 1] )) {
 
+                        if (makeBoard.getBall(i, j).getColor() == tColor) {
+                            makeBoard.destroy(i, j, tColor);
+                            if (shootnum > 0) {
+                                shootnum--;
+                            }
+                            loopcheck = false;
+                            spacepress = false;
+                            break;
+                        }
+                        //i,j
+                        tx = i;
+                        ty = j;                 
                         int temp;
                         temp = makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
 
                        
                          g_shoot_ball[shootnum - 1].destroy();
+
                         if (shootnum > 0) {
                             shootnum--;
                         }
@@ -377,24 +392,34 @@ bool Display(float timeDelta)
                         break;
                         
                     }
+                    else {
+
+                    }
                     
                 }
             }
         }
 
-     
-
-       
+        // 일단 정인이가  구현함      
 
         // getDistance - 공과 공 사이의 거리를 float로 준다.
         // 
+        // 
+        
+
+
         // 
         // s 가 board에 닿으면 (board에 있는 모든 공이랑 hitby해서 좌표 저장되면)
         // board에 붙기
         // shoot--
         // 
-        // board 공들 draw하기
         // 
+        // 
+        // board 공들 draw하기
+        /*if (tx != -1) {
+            makeBoard.destroy(tx , ty, tColor);
+        }*/
+
         // 터지고 / 아래로 떨어지고 (1초 쉬기?)
         // spacepress = false
 

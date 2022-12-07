@@ -76,7 +76,7 @@ public:
         //�ٿ���� �� ����ϴ� �ݺ���
         int hit = 0;
         
-        for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
+        /*for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
             if (brd[rBoundary][i].getExist())
                 break;
             else if (i == sizeof(brd[0]) / sizeof(CSphere) && (!brd[rBoundary][i].getExist())) {
@@ -84,9 +84,9 @@ public:
                 rBoundary--;
 
             }
-        }
+        }*/
         // �Ͷ߸��� �ݺ���
-        for (int i = 0; i < rBoundary; i++) {
+        for (int i = 0; i < 10; i++) {
             for (int j = 0; i < sizeof(brd[0]) / sizeof(CSphere); j++) {
                 if (brd[i][j].getChflag() == 1) {
                     //�Ͷ߸��� ����
@@ -111,7 +111,7 @@ public:
                 }
 
                 if (m % 2 == 0) {
-                    if (m <= rBoundary) {
+                    if (m <= 10 ) { //rb                        
                         chNeighball(m + 1, n, col, cs);
                         if (n > 0)
                             chNeighball(m + 1, n - 1, col, cs);
@@ -127,7 +127,7 @@ public:
                 }
 
                 else if (m % 2 == 1) {
-                    if (m <= rBoundary) {
+                    if (m <= 10) { //rb
                         if (n < sizeof(brd[0]) / sizeof(CSphere) - 1)
                             chNeighball(m + 1, n + 1, col, cs);
 

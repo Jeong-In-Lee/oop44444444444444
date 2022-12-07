@@ -134,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Csphere.cpp" />
+    <ClCompile Include="CSphere.cpp" />
     <ClCompile Include="CWall.cpp" />
     <ClCompile Include="d3dUtility.cpp" />
     <ClCompile Include="VirtualLego.cpp">
@@ -142,7 +142,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Csphere.h" />
+    <ClInclude Include="CSphere.h" />
     <ClInclude Include="CWall.h" />
     <ClInclude Include="d3dUtility.h" />
   </ItemGroup>
