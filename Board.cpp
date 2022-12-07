@@ -86,8 +86,8 @@ public:
             }
         }*/
         // �Ͷ߸��� �ݺ���
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; i < sizeof(brd[0]) / sizeof(CSphere); j++) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
                 if (brd[i][j].getChflag() == 1) {
                     //�Ͷ߸��� ����
                     brd[i][j].setExist(false);
