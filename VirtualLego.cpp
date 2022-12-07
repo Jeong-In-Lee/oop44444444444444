@@ -349,6 +349,10 @@ bool Display(float timeDelta)
         }
 
         for (i = 0; i < 3; i++) {
+            if (g_legowall[0].hasIntersected(g_shoot_ball[shootnum - 1]))
+            {
+                makeBoard.attachWall(g_shoot_ball[shootnum - 1]);
+            }
             g_legowall[i].hitBy(g_shoot_ball[shootnum - 1]);
         }
 

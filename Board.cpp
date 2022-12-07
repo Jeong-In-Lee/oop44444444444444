@@ -168,7 +168,7 @@ public:
         {
             if(!brd[0][i].getExist())
             {
-                temp = brd[0][i].distance(ball);
+                temp = brd[0][i].getDistance(ball);
                 if(short_distance>temp)
                 {
                     short_distance = temp;
@@ -177,7 +177,7 @@ public:
             }
         }
         
-        brd[0][pos].setExist();
+        brd[0][pos].setExist(true);
         brd[0][pos].revColor(ball.getColor());
     }
     

@@ -90,9 +90,9 @@ void CWall::hitBy(CSphere& ball)
     if (this->hasIntersected(ball))
     {
         this->adjustPosition(ball);
-        if (this->wall_position == 0) // ����
+        if (this->wall_position == 0) // 위쪽 
         {
-            ball.setPower(ball.getVelocity_X(), -ball.getVelocity_Z());
+            return;
         }
         else if (this->wall_position == 1) //�Ʒ�
         {
