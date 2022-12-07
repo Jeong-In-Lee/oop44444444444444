@@ -100,7 +100,8 @@ public:
                 }
             }
             
-            hit += bDetach()+1;
+            //hit += bDetach();
+            hit++;
             
         }
         else

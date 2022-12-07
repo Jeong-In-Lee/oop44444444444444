@@ -137,6 +137,7 @@
     <ClCompile Include="CSphere.cpp" />
     <ClCompile Include="CWall.cpp" />
     <ClCompile Include="d3dUtility.cpp" />
+    <ClCompile Include="Saveload.cpp" />
     <ClCompile Include="VirtualLego.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
