@@ -11,7 +11,8 @@
 #include<string.h>
 #include "CWall.h"
 #include "Csphere.h"
-#include "Board.cpp"
+// #include "Board.cpp"
+#include "Saveload.cpp"
 
 using namespace std;
 
@@ -580,6 +581,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     break;
                 }
                 else if (g_screen.Gselectmode() == 1) {  // RELOAD
+                    gameload(makeBoard);
                     // RELOAD 함수 추가해주세요~~
                     break;
                 }
@@ -612,6 +614,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     break;
                 }
                 else if (g_screen.Gselectmode() == 1) {  // SAVE
+                    gamesave(makeBoard);
                     // SAVE 함수 추가해주세요~~
                     break;
                 }

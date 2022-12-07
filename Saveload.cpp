@@ -1,3 +1,5 @@
+#pragma once
+
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
@@ -10,11 +12,9 @@
 
 using namespace std;
 
-
-int score = 0, moves = 20;//denotes current user score
-
-void gamesave(Board& brd);
-void gameload(CSphere* brd[][8]);
+//
+//void gamesave(Board& brd);
+//void gameload(Board& brd);
 
 void gamesave(Board& brd) //포인터로 받아야함-------------------------------------------
 
@@ -23,25 +23,24 @@ void gamesave(Board& brd) //포인터로 받아야함-----------------------------------
 	fout.open("SaveData.txt", ios::out);
 	if (fout.is_open())
 	{
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < brd.getRow(); i++)
 		{
-			for (int j = 0; j < 8; j++)
+			for (int j = 0; j < brd.getCol(); j++)
 			{
 				fout << brd.getBall(i,j).getColor() << " "; //ㅇㄹ호ㅓㅏㅣㅓㅗㅎㄹㅇ
-				fout << brd[i][j].getCenter().x << " ";
-				fout << brd[i][j].getCenter().y << " ";
-				fout << brd[i][j].getCenter().z << " ";
-				fout << brd[i][j].getExist() << " "; //true = 1 false 0
+				fout << brd.getBall(i, j).getCenter().x << " ";
+				fout << brd.getBall(i, j).getCenter().y << " ";
+				fout << brd.getBall(i, j).getCenter().z << " ";
+				fout << brd.getBall(i, j).getExist() << " "; //true = 1 false 0
 				fout << endl;
 			}
 
 		}
-		fout << " " << score << " " << moves;
 		fout.close();
 
 	}
 }
-void gameload(CSphere* brd[][8])
+void gameload(Board& brd)
 {
 	string line;
 	fstream fin;
@@ -50,8 +49,8 @@ void gameload(CSphere* brd[][8])
 
 	if (myfile.is_open())
 	{
-		int col = sizeof(brd) / sizeof(CSphere);
-		int row = sizeof(brd) / sizeof(brd[0]);
+		int col = brd.getCol();
+		int row = brd.getRow();
 
 
 		for (int i = 0; i < row; i++)
@@ -87,9 +86,9 @@ void gameload(CSphere* brd[][8])
 
 
 
-		fin >> score;
-		fin >> moves;
-		fin.close();
+		//fin >> score;
+		//fin >> moves;
+		//fin.close();
 	}
 	//cout <<score<< moves;
 
