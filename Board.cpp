@@ -201,7 +201,7 @@ public:
                         return m*1000+n*100+(m+1)*10+n-1;
                     }
                 }
-                rBoundary++;
+               
                 //            return true;
             }
             //        else return false;
