@@ -80,7 +80,7 @@ public:
         int hit = 0;
         
         // �Ͷ߸��� �ݺ���
-        for (int i = 0; i < rBoundary; i++) {
+        for (int i = 0; i <= rBoundary; i++) {
             for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
                 if (brd[i][j].getExist()&&brd[i][j].getChflag() == 1) {
                     //�Ͷ߸��� ����
@@ -90,7 +90,7 @@ public:
         }
         if (hit >= 3)
         {
-            for (int i = 0; i < rBoundary; i++) {
+            for (int i = 0; i <= rBoundary; i++) {
                 for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
                     if (brd[i][j].getExist() && brd[i][j].getChflag() == 1) {
                         //�Ͷ߸��� ����
@@ -102,7 +102,7 @@ public:
         }
         else
         {
-            for (int i = 0; i < rBoundary; i++) {
+            for (int i = 0; i <= rBoundary; i++) {
                 for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
                     if (brd[i][j].getExist() && brd[i][j].getChflag() == 1) {
                         //�Ͷ߸��� ����
@@ -429,7 +429,7 @@ public:
             }
         }
         
-        for (int i = sizeof(brd)/sizeof(brd[0]); i>= rBoundary; i--) {
+        for (int i = sizeof(brd)/sizeof(brd[0])-1; i>= rBoundary; i--) {
             for (int j = 0; j<sizeof(brd[0])/sizeof(CSphere); j++) {
                 if (brd[i][j].getExist()) {
                     rBoundary = i;
