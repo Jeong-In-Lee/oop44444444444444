@@ -71,7 +71,7 @@ public:
     }
 
     int destroy(int m, int n, int col) {
-        this->chNeighball(m, n, col, 1);
+        this->chNeighball(m, n, col);
 
         //�ٿ���� �� ����ϴ� �ݺ���
         int hit = 0;
