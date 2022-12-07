@@ -378,8 +378,7 @@ bool Display(float timeDelta)
                         //i,j
                         tx = i;
                         ty = j;                 
-                        int temp;
-                        temp = makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
+                        makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
 
                        
                          g_shoot_ball[shootnum - 1].destroy();
