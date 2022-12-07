@@ -159,6 +159,28 @@ public:
         }
     }
 
+    void attachWall(CSphere& ball)
+    {
+        float short_distance=1000;
+        float temp;
+        int pos =6;
+        for(int i = 0; i<getCol(); i++)
+        {
+            if(!brd[0][i].getExist())
+            {
+                temp = brd[0][i].distance(ball);
+                if(short_distance>temp)
+                {
+                    short_distance = temp;
+                    pos = i;
+                }
+            }
+        }
+        
+        brd[0][pos].setExist();
+        brd[0][pos].revColor(ball.getColor());
+    }
+    
     void bAttach(int m, int n, CSphere& ball) {
         int available[6] = { 0, };
 
