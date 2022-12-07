@@ -220,7 +220,7 @@ int shootnum = SHOOTNUM;
 bool spacepress = false;
 float g_vx = 0;
 float g_vz = 0;
-
+int score = 0;
 double g_camera_pos[3] = { 0.0, 5.0, -8.0 };
 
 // -----------------------------------------------------------------------------
@@ -349,13 +349,8 @@ bool Display(float timeDelta)
         }
 
         for (i = 0; i < 3; i++) {
-            if (g_legowall[0].hasIntersected(g_shoot_ball[shootnum - 1]))
-            {
-                makeBoard.attachWall(g_shoot_ball[shootnum - 1]);
-            }
             g_legowall[i].hitBy(g_shoot_ball[shootnum - 1]);
         }
-
 
         bool loopcheck = true;
         int  tColor= g_shoot_ball[shootnum - 1].getColor();
@@ -371,7 +366,9 @@ bool Display(float timeDelta)
                     if (makeBoard.getBall(i, j).hasIntersected(g_shoot_ball[shootnum - 1] )) {
 
                         if (makeBoard.getBall(i, j).getColor() == tColor) {
-                            makeBoard.destroy(i, j, tColor);
+                            int temp_score;
+                            temp_score = makeBoard.destroy(i, j, tColor);
+                            score += (temp_score * 100);
                             if (shootnum > 0) {
                                 shootnum--;
                             }
@@ -384,8 +381,7 @@ bool Display(float timeDelta)
                         ty = j;                 
                         makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
 
-                       
-                         g_shoot_ball[shootnum - 1].destroy();
+                        g_shoot_ball[shootnum - 1].destroy();
 
                         if (shootnum > 0) {
                             shootnum--;
@@ -415,7 +411,16 @@ bool Display(float timeDelta)
         // s 가 board에 닿으면 (board에 있는 모든 공이랑 hitby해서 좌표 저장되면)
         // board에 붙기
         // shoot--
-        // 
+        if (g_legowall[0].hasIntersected(g_shoot_ball[shootnum - 1]))
+        {
+            makeBoard.attachWall(g_shoot_ball[shootnum - 1]);
+            g_shoot_ball[shootnum - 1].destroy();
+            if (shootnum > 0) {
+                shootnum--;
+            }
+            spacepress = false;
+            loopcheck = false;
+        }
         // 
         // 
         // board 공들 draw하기

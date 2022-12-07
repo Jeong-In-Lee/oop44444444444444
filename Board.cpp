@@ -45,7 +45,7 @@ public:
                 brd[i][j].create(pDevice);
 
                 int color = dis(gen);
-                color = 1; //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                //color = 1; //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 if (color == 1)
                     brd[i][j].setColor(d3d::YELLOW);
                 else if (color == 2)
