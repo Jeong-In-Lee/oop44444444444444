@@ -100,46 +100,46 @@ public:
         return hit;
     }
 
-    void chNeighball(int m, int n, int col, int cs) {
+    void chNeighball(int m, int n, int col) {
         //ball ??chflag 추�?, getter, setter ??마찬가지
         if (brd[m][n].getChflag() == 0) {
             if (brd[m][n].getColor() == col) {
-                brd[m][n].setChflag(cs);
+                brd[m][n].setChflag(1);
 
                 if (n < sizeof(brd[0]) / sizeof(CSphere) - 1) {
-                    chNeighball(m, n + 1, col, cs);
+                    chNeighball(m, n + 1, col);
                 }
 
                 if (m % 2 == 0) {
                     if (m <= 10 ) { //rb                        
-                        chNeighball(m + 1, n, col, cs);
+                        chNeighball(m + 1, n, col);
                         if (n > 0)
-                            chNeighball(m + 1, n - 1, col, cs);
+                            chNeighball(m + 1, n - 1, col);
 
                     }
                     if (n > 0) {
-                        chNeighball(m, n - 1, col, cs);
+                        chNeighball(m, n - 1, col);
                         if (m > 0)
-                            chNeighball(m - 1, n - 1, col, cs);
+                            chNeighball(m - 1, n - 1, col);
                     }
                     if (m > 0)
-                        chNeighball(m - 1, n, col, cs);
+                        chNeighball(m - 1, n, col);
                 }
 
                 else if (m % 2 == 1) {
                     if (m <= 10) { //rb
                         if (n < sizeof(brd[0]) / sizeof(CSphere) - 1)
-                            chNeighball(m + 1, n + 1, col, cs);
+                            chNeighball(m + 1, n + 1, col);
 
-                        chNeighball(m + 1, n, col, cs);
+                        chNeighball(m + 1, n, col);
                     }
                     if (n > 0)
-                        chNeighball(m, n - 1, col, cs);
+                        chNeighball(m, n - 1, col);
 
                     if (m > 0) {
-                        chNeighball(m - 1, n, col, cs);
+                        chNeighball(m - 1, n, col);
                         if (n < sizeof(brd[0]) / sizeof(CSphere) - 1)
-                            chNeighball(m - 1, n + 1, col, cs);
+                            chNeighball(m - 1, n + 1, col);
                     }
                 }
 
