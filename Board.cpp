@@ -159,11 +159,36 @@ public:
         }
     }
 
+    void attachWall(CSphere& ball)
+    {
+        float short_distance=1000;
+        float temp;
+        int pos =6;
+        for(int i = 0; i<getCol(); i++)
+        {
+            if(!brd[0][i].getExist())
+            {
+                temp = brd[0][i].distance(ball);
+                if(short_distance>temp)
+                {
+                    short_distance = temp;
+                    pos = i;
+                }
+            }
+        }
+        
+        brd[0][pos].setExist();
+        brd[0][pos].revColor(ball.getColor());
+    }
+    
     void bAttach(int m, int n, CSphere& ball) {
         int available[6] = { 0, };
 
         if (m == 0)
             available[0] = available[1] = 1;
+        
+        if (m == getRow())
+            available[4] = available[5] = 1;
 
         if (m % 2 == 0)
         {
@@ -171,7 +196,13 @@ public:
             float temp;
             int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under 
 
-            if (!brd[m - 1][n - 1].getExist())
+            if(n==0)
+                available[0] = available[2] = available[4] = 1;
+            
+            if(n==getCol())
+                available[3] = 1;
+            
+            if (available[0]==0 &&!brd[m - 1][n - 1].getExist())
             {
                 temp = brd[m - 1][n - 1].getDistance(ball);
                 if (short_distance > temp)
@@ -181,7 +212,7 @@ public:
                 }
             }
 
-            if (!brd[m - 1][n].getExist())
+            if (available[1]==0&&!brd[m - 1][n].getExist())
             {
                 temp = brd[m - 1][n].getDistance(ball);
                 if (short_distance > temp)
@@ -191,7 +222,7 @@ public:
                 }
             }
 
-            if (!brd[m][n - 1].getExist())
+            if (available[2]==0&&!brd[m][n - 1].getExist())
             {
                 temp = brd[m][n - 1].getDistance(ball);
                 if (short_distance > temp)
@@ -201,7 +232,7 @@ public:
                 }
             }
 
-            if (!brd[m][n + 1].getExist())
+            if (available[3]==0&&!brd[m][n + 1].getExist())
             {
                 temp = brd[m][n + 1].getDistance(ball);
                 if (short_distance > temp)
@@ -211,7 +242,7 @@ public:
                 }
             }
 
-            if (!brd[m + 1][n - 1].getExist())
+            if (available[4]==0&&!brd[m + 1][n - 1].getExist())
             {
                 temp = brd[m + 1][n - 1].getDistance(ball);
                 if (short_distance > temp)
@@ -221,7 +252,7 @@ public:
                 }
             }
 
-            if (!brd[m + 1][n].getExist())
+            if (available[5]==0&&!brd[m + 1][n].getExist())
             {
                 temp = brd[m + 1][n].getDistance(ball);
                 if (short_distance > temp)
@@ -261,7 +292,102 @@ public:
         }
         else
         {
+            float short_distance = 1000;
+            float temp;
+            int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under
 
+            if(n==0)
+                available[2] = 1;
+            
+            if(n==getCol())
+                available[1] = available[3] =available[5] = 1;
+            
+            if (available[0]==0 &&!brd[m - 1][n].getExist())
+            {
+                temp = brd[m - 1][n].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 0;
+                }
+            }
+
+            if (available[1]==0&&!brd[m - 1][n + 1].getExist())
+            {
+                temp = brd[m - 1][n + 1].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 1;
+                }
+            }
+
+            if (available[2]==0&&!brd[m][n - 1].getExist())
+            {
+                temp = brd[m][n - 1].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 2;
+                }
+            }
+
+            if (available[3]==0&&!brd[m][n + 1].getExist())
+            {
+                temp = brd[m][n + 1].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 3;
+                }
+            }
+
+            if (available[4]==0&&!brd[m + 1][n].getExist())
+            {
+                temp = brd[m + 1][n].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 4;
+                }
+            }
+
+            if (available[5]==0&&!brd[m + 1][n + 1].getExist())
+            {
+                temp = brd[m + 1][n + 1].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 5;
+                }
+            }
+
+            switch (pos) {
+            case 0:
+                brd[m - 1][n].setExist(true);
+                brd[m - 1][n].revColor(ball.getColor());
+                break;
+            case 1:
+                brd[m - 1][n + 1].setExist(true);
+                brd[m - 1][n + 1].revColor(ball.getColor());
+                break;
+            case 2:
+                brd[m][n - 1].setExist(true);
+                brd[m][n - 1].revColor(ball.getColor());
+                break;
+            case 3:
+                brd[m][n + 1].setExist(true);
+                brd[m][n + 1].revColor(ball.getColor());
+                break;
+            case 4:
+                brd[m + 1][n].setExist(true);
+                brd[m + 1][n].revColor(ball.getColor());
+                break;
+            case 5:
+                brd[m + 1][n + 1].setExist(true);
+                brd[m + 1][n + 1].revColor(ball.getColor());
+                break;
+            }
         }
 
     }
