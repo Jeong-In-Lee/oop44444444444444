@@ -58,10 +58,10 @@ public:
                     brd[i][j].setColor(d3d::GREEN);
 
                 if (i % 2 == 0) {
-                    brd[i][j].setCenter(x_bdCtr - (4  - j) * brd[i][j].getRadius() / 0.5, 0.5, z_bdCtr + depth / 2 - i * brd[i][j].getRadius() / 0.5);
+                    brd[i][j].setCenter(x_bdCtr - (4  - j) * brd[i][j].getRadius() / 0.5, 0.5, z_bdCtr + depth / 2 - i * brd[i][j].getRadius()*sqrt(3) / 0.5);
                 }
                 else if (i % 2 == 1) {
-                    brd[i][j].setCenter(x_bdCtr - (3.5 - j) * brd[i][j].getRadius()/0.5, 0.5, z_bdCtr + depth / 2 - i * brd[i][j].getRadius()/0.5);
+                    brd[i][j].setCenter(x_bdCtr - (3.5 - j) * brd[i][j].getRadius()/0.5, 0.5, z_bdCtr + depth / 2 - i * brd[i][j].getRadius()*sqrt(3)/0.5);
                 }
 
                 if (i > 3)
@@ -100,7 +100,7 @@ public:
                 }
             }
             
-            hit += bDetach();
+            hit += bDetach()+1;
             
         }
         else
