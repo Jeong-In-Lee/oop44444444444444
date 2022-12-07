@@ -88,7 +88,7 @@ public:
                 }
             }
         }
-        if (hit >= 3)
+        if (hit >= 2)
         {
             for (int i = 0; i <= rBoundary; i++) {
                 for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {

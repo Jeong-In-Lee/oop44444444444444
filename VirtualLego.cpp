@@ -105,7 +105,7 @@ public:
             this->selectmode = temp + 1;
         }
     }
-    void UpdateScore(int newscore) { this->score = newscore; }
+    void UpdateScore(int newscore) { this->score = this->score + newscore; }
 };
 
 
@@ -220,7 +220,7 @@ int shootnum = SHOOTNUM;
 bool spacepress = false;
 float g_vx = 0;
 float g_vz = 0;
-int score = 0;
+// int score = 0;
 double g_camera_pos[3] = { 0.0, 5.0, -8.0 };
 
 // -----------------------------------------------------------------------------
@@ -369,9 +369,11 @@ bool Display(float timeDelta)
                         if (makeBoard.getBall(i, j).getColor() == tColor) {
                             int temp_score;
                             temp_score = makeBoard.destroy(i, j, tColor);
+                            g_screen.UpdateScore(temp_score * 100);
+                            g_screen.SetPlay();
                             if(temp_score==0)
                                 makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
-                            score += (temp_score * 100);
+                            
                             if (shootnum > 0) {
                                 shootnum--;
                             }
