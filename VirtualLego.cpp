@@ -368,6 +368,8 @@ bool Display(float timeDelta)
                         if (makeBoard.getBall(i, j).getColor() == tColor) {
                             int temp_score;
                             temp_score = makeBoard.destroy(i, j, tColor);
+                            if(temp_score==0)
+                                makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
                             score += (temp_score * 100);
                             if (shootnum > 0) {
                                 shootnum--;
@@ -419,7 +421,7 @@ bool Display(float timeDelta)
                 shootnum--;
             }
             spacepress = false;
-            loopcheck = false;
+            //loopcheck = false;
         }
         // 
         // 

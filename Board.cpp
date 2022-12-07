@@ -45,7 +45,9 @@ public:
                 brd[i][j].create(pDevice);
 
                 int color = dis(gen);
-                //color = 1; //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                color = 1; //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                if (j == 0)
+                    color = 2;
                 if (color == 1)
                     brd[i][j].setColor(d3d::YELLOW);
                 else if (color == 2)
@@ -78,18 +80,39 @@ public:
         int hit = 0;
         
         // �Ͷ߸��� �ݺ���
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < rBoundary; i++) {
             for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
-                if (brd[i][j].getChflag() == 1) {
+                if (brd[i][j].getExist()&&brd[i][j].getChflag() == 1) {
                     //�Ͷ߸��� ����
-                    brd[i][j].setExist(false);
-                    brd[i][j].setColor(d3d::MAGENTA);
                     hit++;
-
                 }
             }
         }
-        
+        if (hit >= 3)
+        {
+            for (int i = 0; i < rBoundary; i++) {
+                for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
+                    if (brd[i][j].getExist() && brd[i][j].getChflag() == 1) {
+                        //�Ͷ߸��� ����
+                        brd[i][j].setExist(false);
+                        brd[i][j].setColor(d3d::MAGENTA);
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < rBoundary; i++) {
+                for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
+                    if (brd[i][j].getExist() && brd[i][j].getChflag() == 1) {
+                        //�Ͷ߸��� ����
+                        brd[i][j].setChflag(0);
+                    }
+                }
+            }
+
+            hit = 0;
+        }
         for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
             if (brd[rBoundary][i].getExist())
                 break;
@@ -407,8 +430,8 @@ public:
         }
         
         for (int i = sizeof(brd)/sizeof(brd[0]); i>= rBoundary; i--) {
-            for (int j = 0; h<sizeof(brd[0])/sizeof(CSphere); j++) {
-                if (brd[i][j].getExist) {
+            for (int j = 0; j<sizeof(brd[0])/sizeof(CSphere); j++) {
+                if (brd[i][j].getExist()) {
                     rBoundary = i;
                 }
             }
