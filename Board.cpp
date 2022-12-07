@@ -45,6 +45,7 @@ public:
                 brd[i][j].create(pDevice);
 
                 int color = dis(gen);
+                color = 1; //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 if (color == 1)
                     brd[i][j].setColor(d3d::YELLOW);
                 else if (color == 2)
@@ -163,7 +164,7 @@ public:
     {
         float short_distance=1000;
         float temp;
-        int pos =6;
+        int pos =10;
         for(int i = 0; i<getCol(); i++)
         {
             if(!brd[0][i].getExist())
@@ -179,6 +180,7 @@ public:
         
         brd[0][pos].setExist(true);
         brd[0][pos].revColor(ball.getColor());
+        brd[0][pos].setChflag(0);
     }
     
     void bAttach(int m, int n, CSphere& ball) {
@@ -266,26 +268,32 @@ public:
             case 0:
                 brd[m - 1][n - 1].setExist(true);
                 brd[m - 1][n - 1].revColor(ball.getColor());
+                brd[m - 1][n - 1].setChflag(0);
                 break;
             case 1:
                 brd[m - 1][n].setExist(true);
                 brd[m - 1][n].revColor(ball.getColor());
+                brd[m - 1][n].setChflag(0);
                 break;
             case 2:
                 brd[m][n - 1].setExist(true);
                 brd[m][n - 1].revColor(ball.getColor());
+                brd[m][n - 1].setChflag(0);
                 break;
             case 3:
                 brd[m][n + 1].setExist(true);
                 brd[m][n + 1].revColor(ball.getColor());
+                brd[m][n + 1].setChflag(0);
                 break;
             case 4:
                 brd[m + 1][n - 1].setExist(true);
                 brd[m + 1][n - 1].revColor(ball.getColor());
+                brd[m + 1][n - 1].setChflag(0);
                 break;
             case 5:
                 brd[m + 1][n].setExist(true);
                 brd[m + 1][n].revColor(ball.getColor());
+                brd[m + 1][n].setChflag(0);
                 break;
             }
 
@@ -366,26 +374,32 @@ public:
             case 0:
                 brd[m - 1][n].setExist(true);
                 brd[m - 1][n].revColor(ball.getColor());
+                brd[m - 1][n].setChflag(0);
                 break;
             case 1:
                 brd[m - 1][n + 1].setExist(true);
                 brd[m - 1][n + 1].revColor(ball.getColor());
+                brd[m - 1][n + 1].setChflag(0);
                 break;
             case 2:
                 brd[m][n - 1].setExist(true);
                 brd[m][n - 1].revColor(ball.getColor());
+                brd[m][n - 1].setChflag(0);
                 break;
             case 3:
                 brd[m][n + 1].setExist(true);
                 brd[m][n + 1].revColor(ball.getColor());
+                brd[m][n + 1].setChflag(0);
                 break;
             case 4:
                 brd[m + 1][n].setExist(true);
                 brd[m + 1][n].revColor(ball.getColor());
+                brd[m + 1][n].setChflag(0);
                 break;
             case 5:
                 brd[m + 1][n + 1].setExist(true);
                 brd[m + 1][n + 1].revColor(ball.getColor());
+                brd[m + 1][n + 1].setChflag(0);
                 break;
             }
         }
