@@ -71,7 +71,7 @@ public:
     }
 
     int destroy(int m, int n, int col) {
-        this->chNeighball(m, n, coㅣ);
+        this->chNeighball(m, n, col, 1);
 
         //�ٿ���� �� ����ϴ� �ݺ���
         int hit = 0;
@@ -160,111 +160,111 @@ public:
     }
 
     void bAttach(int m, int n, CSphere& ball) {
-            int available[6] = { 0, };
+        int available[6] = { 0, };
 
-            if (m == 0)
-                available[0] = available[1] = 1;
+        if (m == 0)
+            available[0] = available[1] = 1;
 
-            if (m % 2 == 0)
+        if (m % 2 == 0)
+        {
+            float short_distance = 1000;
+            float temp;
+            int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under 
+
+            if (!brd[m - 1][n - 1].getExist())
             {
-                float short_distance = 1000;
-                float temp;
-                int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under
-
-                if (!brd[m - 1][n - 1].getExist())
+                temp = brd[m - 1][n - 1].getDistance(ball);
+                if (short_distance > temp)
                 {
-                    temp = brd[m - 1][n - 1].getDistance(ball);
-                    if (short_distance > temp)
-                    {
-                        short_distance = temp;
-                        pos = 0;
-                    }
+                    short_distance = temp;
+                    pos = 0;
                 }
-
-                if (!brd[m - 1][n].getExist())
-                {
-                    temp = brd[m - 1][n].getDistance(ball);
-                    if (short_distance > temp)
-                    {
-                        short_distance = temp;
-                        pos = 1;
-                    }
-                }
-
-                if (!brd[m][n - 1].getExist())
-                {
-                    temp = brd[m][n - 1].getDistance(ball);
-                    if (short_distance > temp)
-                    {
-                        short_distance = temp;
-                        pos = 2;
-                    }
-                }
-
-                if (!brd[m][n + 1].getExist())
-                {
-                    temp = brd[m][n + 1].getDistance(ball);
-                    if (short_distance > temp)
-                    {
-                        short_distance = temp;
-                        pos = 3;
-                    }
-                }
-
-                if (!brd[m + 1][n - 1].getExist())
-                {
-                    temp = brd[m + 1][n - 1].getDistance(ball);
-                    if (short_distance > temp)
-                    {
-                        short_distance = temp;
-                        pos = 4;
-                    }
-                }
-
-                if (!brd[m + 1][n].getExist())
-                {
-                    temp = brd[m + 1][n].getDistance(ball);
-                    if (short_distance > temp)
-                    {
-                        short_distance = temp;
-                        pos = 5;
-                    }
-                }
-
-                switch (pos) {
-                case 0:
-                    brd[m - 1][n - 1].setExist(true);
-                    brd[m - 1][n - 1].revColor(ball.getColor());
-                    break;
-                case 1:
-                    brd[m - 1][n].setExist(true);
-                    brd[m - 1][n].revColor(ball.getColor());
-                    break;
-                case 2:
-                    brd[m][n - 1].setExist(true);
-                    brd[m][n - 1].revColor(ball.getColor());
-                    break;
-                case 3:
-                    brd[m][n + 1].setExist(true);
-                    brd[m][n + 1].revColor(ball.getColor());
-                    break;
-                case 4:
-                    brd[m + 1][n - 1].setExist(true);
-                    brd[m + 1][n - 1].revColor(ball.getColor());
-                    break;
-                case 5:
-                    brd[m + 1][n].setExist(true);
-                    brd[m + 1][n].revColor(ball.getColor());
-                    break;
-                }
-
             }
-            else
-            {
 
+            if (!brd[m - 1][n].getExist())
+            {
+                temp = brd[m - 1][n].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 1;
+                }
+            }
+
+            if (!brd[m][n - 1].getExist())
+            {
+                temp = brd[m][n - 1].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 2;
+                }
+            }
+
+            if (!brd[m][n + 1].getExist())
+            {
+                temp = brd[m][n + 1].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 3;
+                }
+            }
+
+            if (!brd[m + 1][n - 1].getExist())
+            {
+                temp = brd[m + 1][n - 1].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 4;
+                }
+            }
+
+            if (!brd[m + 1][n].getExist())
+            {
+                temp = brd[m + 1][n].getDistance(ball);
+                if (short_distance > temp)
+                {
+                    short_distance = temp;
+                    pos = 5;
+                }
+            }
+
+            switch (pos) {
+            case 0:
+                brd[m - 1][n - 1].setExist(true);
+                brd[m - 1][n - 1].revColor(ball.getColor());
+                break;
+            case 1:
+                brd[m - 1][n].setExist(true);
+                brd[m - 1][n].revColor(ball.getColor());
+                break;
+            case 2:
+                brd[m][n - 1].setExist(true);
+                brd[m][n - 1].revColor(ball.getColor());
+                break;
+            case 3:
+                brd[m][n + 1].setExist(true);
+                brd[m][n + 1].revColor(ball.getColor());
+                break;
+            case 4:
+                brd[m + 1][n - 1].setExist(true);
+                brd[m + 1][n - 1].revColor(ball.getColor());
+                break;
+            case 5:
+                brd[m + 1][n].setExist(true);
+                brd[m + 1][n].revColor(ball.getColor());
+                break;
             }
 
         }
+        else
+        {
+
+        }
+
+    }
 
     void chEmpty(int m, int n, int* hMax, int* wMin, int* wMax) {
 
