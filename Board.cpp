@@ -65,9 +65,8 @@ public:
 
     int destroy(int m, int n, CSphere &ball) {
         
-        int b2Ch = bAttach(m, n, ball);
         int col = ball.getColor();
-        this->chNeighball(b2Ch/10, b2Ch%10, col);
+        this->chNeighball(m, n, col);
 
         int hit = 0;
         
