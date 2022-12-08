@@ -61,7 +61,7 @@ public:
         this->GameMode = 1;
         this->str = "Score : ";
         this->str += to_string(this->score);
-        this->str += "                           PRESS TAB TO PAUSE";
+        //this->str += "                           PRESS TAB TO PAUSE";
         this->x = 20;
         this->y = 20;
     }
@@ -378,42 +378,54 @@ bool Display(float timeDelta)
             }
             for (j = 0; j < makeBoard.getCol(); j++) {
                 if (makeBoard.getBall(i, j).getExist()) {
-                    if (makeBoard.getBall(i, j).hasIntersected(g_shoot_ball[shootnum - 1] )) {
-
-                        if (makeBoard.getBall(i, j).getColor() == tColor) {
-                            int temp_score;
-                            temp_score = makeBoard.destroy(i, j, tColor);
-                            g_screen.UpdateScore(temp_score * 100);
-                            g_screen.SetPlay();
-                            if(temp_score==0)
-                                makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
-                            
-                            if (shootnum > 0) {
-                                shootnum--;
-                            }
-                            loopcheck = false;
-                            spacepress = false;
-                            break;
-                        }
-                        //i,j
-                        tx = i;
-                        ty = j;                 
-                        makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
-
-                        g_shoot_ball[shootnum - 1].destroy();
-
+                    if (makeBoard.getBall(i, j).hasIntersected(g_shoot_ball[shootnum - 1])) {
+                        int temp_xz = makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
+                        int temp_x = temp_xz / 10;
+                        int temp_y = temp_xz % 10;
+                        int temp_score = makeBoard.destroy(temp_x, temp_xz, g_shoot_ball[shootnum - 1]);
                         if (shootnum > 0) {
                             shootnum--;
                         }
                         loopcheck = false;
                         spacepress = false;
                         break;
-                        
-                    }
-                    else {
+
+
+                        /* if (makeBoard.getBall(i, j).getColor() == tColor) {
+                             int temp_score;
+                             temp_score = makeBoard.destroy(i, j, g_shoot_ball[shootnum-1]);
+                             g_screen.UpdateScore(temp_score * 100);
+                             g_screen.SetPlay();
+                             if(temp_score==0)
+                                 makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
+
+                             if (shootnum > 0) {
+                                 shootnum--;
+                             }
+                             loopcheck = false;
+                             spacepress = false;
+                             break;
+                         }*/
+                         ////i,j
+                         //tx = i;
+                         //ty = j;                 
+                         //makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
+
+                         //g_shoot_ball[shootnum - 1].destroy();
+
+                         //if (shootnum > 0) {
+                         //    shootnum--;
+                         //}
+                         //loopcheck = false;
+                         //spacepress = false;
+                     //    //break;
+                     //    
+                     //}
+                     //else {
+
+                     //}
 
                     }
-                    
                 }
             }
         }
@@ -542,9 +554,16 @@ bool Display(float timeDelta)
             strcpy(fch, a.c_str());
             fFont->DrawText(NULL, fch, -1, &frt, DT_NOCLIP, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
             fFont->Release();
+
+            LPD3DXFONT tabf;
+            D3DXCreateFont(Device, 50, 0, FW_NORMAL, 1, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
+                DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &tabf);
+            char tabch[100] = "                              PRESS TAB TO PAUSE";
+            RECT tabrt;
+            SetRect(&tabrt, g_screen.Gx()+200, g_screen.Gy(), 0, 0);
+            tabf->DrawText(NULL, tabch, -1, &tabrt, DT_NOCLIP, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
+            tabf->Release();
         }
-
-
 
         // INTRO + PAUSE + RESULT 작업 끝
 
