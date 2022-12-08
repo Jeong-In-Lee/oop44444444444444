@@ -63,8 +63,11 @@ public:
         }
     }
 
-    int destroy(int m, int n, int col) {
-        this->chNeighball(m, n, col);
+    int destroy(int m, int n, CSphere &ball) {
+        
+        int b2Ch = bAttach(m, n, ball);
+        int col = ball.getColor();
+        this->chNeighball(b2Ch/10, b2Ch%10, col);
 
         //�ٿ���� �� ����ϴ� �ݺ���
         int hit = 0;
@@ -494,7 +497,7 @@ public:
         int* hei;
         int hit = 0;
         for (i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
-            if (brd[rBoundary][i].getColor() == 0)
+            if (brd[rBoundary][i].getExist() == 0)
                 break;
         }
 
