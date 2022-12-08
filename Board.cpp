@@ -12,7 +12,6 @@ private:
     CSphere brd[18][8];
     float x_bdCtr, y_bdCtr, z_bdCtr;
     int rBoundary;
-    int empFl = -2;
 
 public:
 
@@ -447,41 +446,49 @@ public:
     }
 
     void chEmpty(int m, int n) {
-
-        if (brd[m][n].getColor() == 0) {
-            brd[m][n].setChflag(empFl);
-            if (m > *hMax)
-                *hMax = m;
-            if (n < *wMin)
-                *wMin = n;
-            else if (n > *wMax)
-                *wMax = n;
-
-            if (n > 0)
-                chEmpty(m, n - 1, hMax, wMin, wMax);
-
-            if (m % 2 == 0) {
-
-                if (m > 0) {
-                    if (n > 0) {
-                        chEmpty(m - 1, n - 1, hMax, wMin, wMax);
+        if(brd[m][n].getExist()){
+            if (!brd[m][n].getDeflag()) {
+                brd[m][n].setDeflag(1);
+                
+                if (n - 1 >= 0)
+                    chEmpty(m, n - 1);
+                
+                if (m % 2 == 0) {
+                    if (m-1 >= 0) {
+                        if (n-1 >= 0)
+                            chEmpty(m - 1, n - 1);
+                        
+                        chEmpty(m - 1, n);
                     }
-                    chEmpty(m - 1, n, hMax, wMin, wMax);
-                }
-
-
-                chEmpty(m, n + 1, hMax, wMin, wMax);
-                chEmpty(m + 1, n, hMax, wMin, wMax);
-                chEmpty(m + 1, n - 1, hMax, wMin, wMax);
-
-            }
-            else if (m % 2 == 1) {
-
-                chEmpty(m - 1, n, hMax, wMin, wMax);
-                chEmpty(m - 1, n + 1, hMax, wMin, wMax);
-                chEmpty(m, n + 1, hMax, wMin, wMax);
-                chEmpty(m + 1, n + 1, hMax, wMin, wMax);
-                chEmpty(m + 1, n, hMax, wMin, wMax);
+                    
+                    if(n+1<sizeof(brd[0])/sizeof(CSphere))
+                        chEmpty(m, n + 1);
+                    
+                    if(m+1<sizeof(brd)/sizeof(brd[0])){
+                        chEmpty(m + 1, n);
+                        
+                        if(n-1>=0)
+                            chEmpty(m + 1, n - 1);
+                    }
+                }//end of even m
+                
+                else if (m % 2 == 1) {
+                    if(m-1>=0){
+                        chEmpty(m - 1, n);
+                        
+                        if(n+1<sizeof(brd[0])/sizeof(CSphere))
+                            chEmpty(m - 1, n + 1);
+                    }
+                    
+                    if(n+1<sizeof(brd[0])/sizeof(CSphere)){
+                        chEmpty(m, n + 1);
+                        
+                        if(m+1<sizeof(brd)/sizeof(brd[0]))
+                            chEmpty(m + 1, n + 1);
+                    }
+                    if(m+1<sizeof(brd)/sizeof(brd[0]))
+                        chEmpty(m + 1, n);
+                }//end of odd m
             }
         }
     }
@@ -492,19 +499,23 @@ public:
             chEmpty(i, 0);
             chEmpty(i, sizeof(brd[0]) / sizeof(CSphere) - 1);
         }
-        for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
+        for (int i = 0; i<sizeof(brd[0])/sizeof(CSphere); i++) {
             chEmpty(0, i);
         }
-
-        /*for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
+        
+        int hit=0;
+        
+        for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
             for (int j = 0; j<sizeof(brd[0])/sizeof(CSphere); j++) {
-                if (brd[i][j].deFlag != brd[i][j].getExist() ) {
-                    <#statements#>
+                if (brd[i][j].getDeflag() != brd[i][j].getExist() ) {
+                    brd[i][j].setExist(false);
+                    brd[i][j].setColor(d3d::MAGENTA);
+                    brd[i][j].setDeflag(0);
+                    hit++;
                 }
             }
-        }*/
-        //return hit;
-        return 0;
+        }
+        return hit;
     }
 
     void resume(int col, int row, float x, float y, float z, int color, bool exist)

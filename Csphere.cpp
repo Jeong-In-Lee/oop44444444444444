@@ -253,6 +253,14 @@ void CSphere::setChflag(int val) {
     chFlag = val;
 }
 
+int CSphere::getDeflag(){
+    return this->deFlag;
+}
+
+void CSphere::setDeflag(int val){
+    this->deFlag = val;
+}
+
 float CSphere::getDistance(CSphere& ball)
 {
     float ax, az, bx, bz, temp, distance;
