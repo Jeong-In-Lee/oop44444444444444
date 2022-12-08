@@ -77,6 +77,8 @@ namespace d3d
 	const D3DXCOLOR       CYAN( D3DCOLOR_XRGB(  0, 255, 255) );
 	const D3DXCOLOR    MAGENTA( D3DCOLOR_XRGB(255,   0, 255) );
 	const D3DXCOLOR	   DARKRED( D3DCOLOR_XRGB(215,	0,	0));
+	const D3DXCOLOR	   VIOLET(D3DCOLOR_XRGB(200, 150, 250));
+
 
 	//
 	// Lights

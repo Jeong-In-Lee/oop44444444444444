@@ -45,17 +45,7 @@ public:
                 brd[i][j].create(pDevice);
 
                 int color = dis(gen);
-                color = 1; //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                if (j == 0)
-                    color = 2;
-                if (color == 1)
-                    brd[i][j].setColor(d3d::YELLOW);
-                else if (color == 2)
-                    brd[i][j].setColor(d3d::RED);
-                else if (color == 3)
-                    brd[i][j].setColor(d3d::BLUE);
-                else
-                    brd[i][j].setColor(d3d::GREEN);
+                brd[i][j].revColor(color);
 
                 if (i % 2 == 0) {
                     brd[i][j].setCenter(x_bdCtr - (4  - j) * brd[i][j].getRadius() / 0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 - i * brd[i][j].getRadius()*sqrt(3));

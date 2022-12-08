@@ -208,6 +208,7 @@ private:
 // -----------------------------------------------------------------------------
 CWall   g_legoPlane;
 CWall   g_legowall[4];
+CWall g_legoLine;
 CSphere   g_sphere[BLOCKNUM];
 CSphere g_red_ball;
 CSphere g_white_ball;
@@ -249,6 +250,8 @@ bool Setup()
     if (false == g_legoPlane.create(Device, -1, -1, 6.4, 0.03f, 9, d3d::GREEN)) return false;
     g_legoPlane.setPosition(0.0f, -0.0006f / 5, 0.0f);
 
+    if (false == g_legoLine.create(Device, -1, -1, 6.4, 0.03f, 0.01f, d3d::VIOLET)) return false;
+    g_legoLine.setPosition(0.0f, -0.0006f / 5, 6.5f);
 
     // create walls and set the position. note that there are four walls
     if (false == g_legowall[0].create(Device, -1, -1, 6.6f, 0.3f, 0.12f, d3d::DARKRED)) return false; // 현재 가로 기준 위쪽 & 순서대로 가로 높이 세로
@@ -271,10 +274,15 @@ bool Setup()
     if (false == g_target_blueball.create(Device, d3d::WHITE)) return false;
     g_target_blueball.setCenter(0, (float)M_RADIUS, 0);
 
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> dis(1, 4);
+
     // create shoot ball
     for (i = 0; i < SHOOTNUM; i++) {
         if (false == g_shoot_ball[i].create(Device, d3d::YELLOW)) return false;
-        g_shoot_ball[i].setColor(d3d::YELLOW);
+        int ran_color = dis(gen);
+        g_shoot_ball[i].revColor(ran_color);
         g_shoot_ball[i].setCenter(0.0f, (float)M_RADIUS, -4.5f);
         g_shoot_ball[i].setPower(0, 0);
     }
