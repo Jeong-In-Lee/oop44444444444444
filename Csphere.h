@@ -61,6 +61,10 @@ public:
 
     void setChflag(int val);
 
+    int getDeflag();
+
+    void setDeflag(int val);
+
     float getDistance(CSphere& ball);
 
 private:
