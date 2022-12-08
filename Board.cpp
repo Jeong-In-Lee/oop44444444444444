@@ -495,9 +495,9 @@ public:
 
     int bDetach() {
 
-        for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
+        for (int i = 0; i < sizeof(brd) / sizeof(brd[0]); i++) {
             chEmpty(i, 0);
-            chEmpty(i, sizeof(brd[0])/sizeof(CSphere)-1);
+            chEmpty(i, sizeof(brd[0]) / sizeof(CSphere) - 1);
         }
         for (int i = 0; i<sizeof(brd[0])/sizeof(CSphere); i++) {
             chEmpty(0, i);
