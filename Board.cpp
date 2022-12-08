@@ -13,6 +13,8 @@ private:
     CSphere brd[13][8];
     float x_bdCtr, y_bdCtr, z_bdCtr;
     int rBoundary;
+    
+    CSphere* extBrd[13][8];
 
 public:
 
@@ -42,21 +44,30 @@ public:
             for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) //col
             {
                 brd[i][j].create(pDevice);
-
+                (*extBrd[i][j]).create(pDevice);
+                
                 int color = dis(gen);
                 brd[i][j].revColor(color);
+                
+                (*extBrd[i][j]).setExist(false);
+                (*extBrd[i][j]).setColor(d3d::MAGENTA);
 
                 if (i % 2 == 0) {
-                    brd[i][j].setCenter(x_bdCtr - (4  - j) * brd[i][j].getRadius() / 0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 - i * brd[i][j].getRadius()*sqrt(3));
+                    brd[i][j].setCenter(x_bdCtr - (4  - j) * brd[i][j].getRadius() / 0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 -1 - i * brd[i][j].getRadius()*sqrt(3));
+                    (*extBrd[i][j]).setCenter(x_bdCtr - (4  - j) * brd[i][j].getRadius() / 0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 -1 - i * brd[i][j].getRadius()*sqrt(3));
                 }
                 else if (i % 2 == 1) {
-                    brd[i][j].setCenter(x_bdCtr - (3.5 - j) * brd[i][j].getRadius()/0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 - i * brd[i][j].getRadius()*sqrt(3));
+                    brd[i][j].setCenter(x_bdCtr - (3.5 - j) * brd[i][j].getRadius()/0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 -1 - i * brd[i][j].getRadius()*sqrt(3));
+                    (*extBrd[i][j]).setCenter(x_bdCtr - (3.5 - j) * brd[i][j].getRadius()/0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 -1 - i * brd[i][j].getRadius()*sqrt(3));
                 }
 
                 if (i > 3)
                 {
                     brd[i][j].setExist(false);
                     brd[i][j].setColor(d3d::MAGENTA);
+                    
+                    (*extBrd[i][j]).setExist(false);
+                    (*extBrd[i][j]).setColor(d3d::MAGENTA);
                 }
             }
         }
@@ -496,25 +507,23 @@ public:
         }
     }
 
-    int bDetach() {
+    void bDetach() {
         
         for (int i = 0; i<sizeof(brd[0])/sizeof(CSphere); i++) {
             chEmpty(0, i);
         }
         
-        int hit=0;
-        
         for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
             for (int j = 0; j<sizeof(brd[0])/sizeof(CSphere); j++) {
                 if (brd[i][j].getDeflag() != brd[i][j].getExist() ) {
+                    (*extBrd[i][j]).setExist(true);
+                    (*extBrd[i][j]).setColor(brd[i][j].getColor());
                     brd[i][j].setExist(false);
                     brd[i][j].setColor(d3d::MAGENTA);
-                    hit++;
                 }
                 brd[i][j].setDeflag(0);
             }
         }
-        return hit;
     }
 
     void resume(int col, int row, float x, float y, float z, int color, bool exist)
