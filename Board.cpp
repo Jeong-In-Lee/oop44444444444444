@@ -10,7 +10,7 @@ using namespace std;
 class Board {
 
 private:
-    CSphere brd[13][8];
+    CSphere brd[15][8];
     float x_bdCtr, y_bdCtr, z_bdCtr;
     int rBoundary;
 
@@ -47,10 +47,10 @@ public:
                 brd[i][j].revColor(color);
 
                 if (i % 2 == 0) {
-                    brd[i][j].setCenter(x_bdCtr - (4  - j) * brd[i][j].getRadius() / 0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 - i * brd[i][j].getRadius()*sqrt(3));
+                    brd[i][j].setCenter(x_bdCtr - (4 - j) * brd[i][j].getRadius() / 0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 - i * brd[i][j].getRadius() * sqrt(3));
                 }
                 else if (i % 2 == 1) {
-                    brd[i][j].setCenter(x_bdCtr - (3.5 - j) * brd[i][j].getRadius()/0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 - i * brd[i][j].getRadius()*sqrt(3));
+                    brd[i][j].setCenter(x_bdCtr - (3.5 - j) * brd[i][j].getRadius() / 0.5, brd[0][0].getRadius(), z_bdCtr + depth / 2 - i * brd[i][j].getRadius() * sqrt(3));
                 }
 
                 if (i > 3)
@@ -62,18 +62,18 @@ public:
         }
     }
 
-    int destroy(int m, int n, CSphere &ball) {
-        
+    int destroy(int m, int n, CSphere& ball) {
+
         int col = ball.getColor();
         this->chNeighball(m, n, col);
 
         int hit = 0;
-        
-        // �Ͷ߸��� �ݺ���
+
+        //  Ͷ߸     ݺ   
         for (int i = 0; i <= rBoundary; i++) {
             for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
-                if (brd[i][j].getExist()&&brd[i][j].getChflag() == 1) {
-                    //�Ͷ߸��� ����
+                if (brd[i][j].getExist() && brd[i][j].getChflag() == 1) {
+                    // Ͷ߸        
                     hit++;
                 }
             }
@@ -83,24 +83,24 @@ public:
             for (int i = 0; i <= rBoundary; i++) {
                 for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
                     if (brd[i][j].getExist() && brd[i][j].getChflag() == 1) {
-                        //�Ͷ߸��� ����
+                        // Ͷ߸        
                         brd[i][j].setExist(false);
                         brd[i][j].setColor(d3d::MAGENTA);
                     }
                 }
             }
-            
+
             //Sleep(500);
             //hit += bDetach();
             //hit++;
-            
+
         }
         else
         {
             for (int i = 0; i <= rBoundary; i++) {
                 for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
                     if (brd[i][j].getExist() && brd[i][j].getChflag() == 1) {
-                        //�Ͷ߸��� ����
+                        // Ͷ߸        
                         brd[i][j].setChflag(0);
                     }
                 }
@@ -111,18 +111,18 @@ public:
         for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
             if (brd[rBoundary][i].getExist())
                 break;
-            else if (i == sizeof(brd[0]) / sizeof(CSphere)-1 && (!brd[rBoundary][i].getExist())) {
+            else if (i == sizeof(brd[0]) / sizeof(CSphere) - 1 && (!brd[rBoundary][i].getExist())) {
                 i = -1;
                 rBoundary--;
 
             }
         }
-        
+
         return hit;
     }
 
     void chNeighball(int m, int n, int col) {
-        //ball ??chflag 추�?, getter, setter ??마찬가지
+        //ball ??chflag 추 ?, getter, setter ??마찬가지
         if (brd[m][n].getChflag() == 0) {
             if (brd[m][n].getColor() == col) {
                 brd[m][n].setChflag(1);
@@ -132,7 +132,7 @@ public:
                 }
 
                 if (m % 2 == 0) {
-                    if (m <= 10 ) { //rb
+                    if (m <= 10) { //rb                        
                         chNeighball(m + 1, n, col);
                         if (n > 0)
                             chNeighball(m + 1, n - 1, col);
@@ -182,34 +182,34 @@ public:
 
     int attachWall(CSphere& ball)
     {
-        float short_distance=1000;
+        float short_distance = 1000;
         float temp;
-        int pos =10;
-        for(int i = 0; i<getCol(); i++)
+        int pos = 10;
+        for (int i = 0; i < getCol(); i++)
         {
-            if(!brd[0][i].getExist())
+            if (!brd[0][i].getExist())
             {
                 temp = brd[0][i].getDistance(ball);
-                if(short_distance>temp)
+                if (short_distance > temp)
                 {
                     short_distance = temp;
                     pos = i;
                 }
             }
         }
-        
+
         brd[0][pos].setExist(true);
         brd[0][pos].revColor(ball.getColor());
         brd[0][pos].setChflag(0);
         return pos;
     }
-    
+
     int bAttach(int m, int n, CSphere& ball) {
         int available[6] = { 0, };
         int value;
         if (m == 0)
             available[0] = available[1] = 1;
-        
+
         if (m == getRow())
             available[4] = available[5] = 1;
 
@@ -217,15 +217,15 @@ public:
         {
             float short_distance = 1000;
             float temp;
-            int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under
+            int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under 
 
-            if(n==0)
+            if (n == 0)
                 available[0] = available[2] = available[4] = 1;
-            
-            if(n==getCol())
+
+            if (n == getCol())
                 available[3] = 1;
-            
-            if (available[0]==0 &&!brd[m - 1][n - 1].getExist())
+
+            if (available[0] == 0 && !brd[m - 1][n - 1].getExist())
             {
                 temp = brd[m - 1][n - 1].getDistance(ball);
                 if (short_distance > temp)
@@ -235,7 +235,7 @@ public:
                 }
             }
 
-            if (available[1]==0&&!brd[m - 1][n].getExist())
+            if (available[1] == 0 && !brd[m - 1][n].getExist())
             {
                 temp = brd[m - 1][n].getDistance(ball);
                 if (short_distance > temp)
@@ -245,7 +245,7 @@ public:
                 }
             }
 
-            if (available[2]==0&&!brd[m][n - 1].getExist())
+            if (available[2] == 0 && !brd[m][n - 1].getExist())
             {
                 temp = brd[m][n - 1].getDistance(ball);
                 if (short_distance > temp)
@@ -255,7 +255,7 @@ public:
                 }
             }
 
-            if (available[3]==0&&!brd[m][n + 1].getExist())
+            if (available[3] == 0 && !brd[m][n + 1].getExist())
             {
                 temp = brd[m][n + 1].getDistance(ball);
                 if (short_distance > temp)
@@ -265,7 +265,7 @@ public:
                 }
             }
 
-            if (available[4]==0&&!brd[m + 1][n - 1].getExist())
+            if (available[4] == 0 && !brd[m + 1][n - 1].getExist())
             {
                 temp = brd[m + 1][n - 1].getDistance(ball);
                 if (short_distance > temp)
@@ -275,7 +275,7 @@ public:
                 }
             }
 
-            if (available[5]==0&&!brd[m + 1][n].getExist())
+            if (available[5] == 0 && !brd[m + 1][n].getExist())
             {
                 temp = brd[m + 1][n].getDistance(ball);
                 if (short_distance > temp)
@@ -290,7 +290,7 @@ public:
                 brd[m - 1][n - 1].setExist(true);
                 brd[m - 1][n - 1].revColor(ball.getColor());
                 brd[m - 1][n - 1].setChflag(0);
-                value=(m - 1) * 10 + (n - 1);
+                value = (m - 1) * 10 + (n - 1);
                 break;
             case 1:
                 brd[m - 1][n].setExist(true);
@@ -302,28 +302,28 @@ public:
                 brd[m][n - 1].setExist(true);
                 brd[m][n - 1].revColor(ball.getColor());
                 brd[m][n - 1].setChflag(0);
-                value=(m) * 10 + (n - 1);
+                value = (m) * 10 + (n - 1);
                 break;
             case 3:
                 brd[m][n + 1].setExist(true);
                 brd[m][n + 1].revColor(ball.getColor());
                 brd[m][n + 1].setChflag(0);
-                value=(m) * 10 + (n + 1);
+                value = (m) * 10 + (n + 1);
                 break;
             case 4:
                 brd[m + 1][n - 1].setExist(true);
                 brd[m + 1][n - 1].revColor(ball.getColor());
                 brd[m + 1][n - 1].setChflag(0);
-                value = (m + 1) * 10 + (n-1);
+                value = (m + 1) * 10 + (n - 1);
                 break;
             case 5:
                 brd[m + 1][n].setExist(true);
                 brd[m + 1][n].revColor(ball.getColor());
                 brd[m + 1][n].setChflag(0);
-                value=(m + 1) * 10 + (n);
+                value = (m + 1) * 10 + (n);
                 break;
             }
-            
+
         }
         else
         {
@@ -331,13 +331,13 @@ public:
             float temp;
             int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under
 
-            if(n==0)
+            if (n == 0)
                 available[2] = 1;
-            
-            if(n==getCol())
-                available[1] = available[3] =available[5] = 1;
-            
-            if (available[0]==0 &&!brd[m - 1][n].getExist())
+
+            if (n == getCol())
+                available[1] = available[3] = available[5] = 1;
+
+            if (available[0] == 0 && !brd[m - 1][n].getExist())
             {
                 temp = brd[m - 1][n].getDistance(ball);
                 if (short_distance > temp)
@@ -347,7 +347,7 @@ public:
                 }
             }
 
-            if (available[1]==0&&!brd[m - 1][n + 1].getExist())
+            if (available[1] == 0 && !brd[m - 1][n + 1].getExist())
             {
                 temp = brd[m - 1][n + 1].getDistance(ball);
                 if (short_distance > temp)
@@ -357,7 +357,7 @@ public:
                 }
             }
 
-            if (available[2]==0&&!brd[m][n - 1].getExist())
+            if (available[2] == 0 && !brd[m][n - 1].getExist())
             {
                 temp = brd[m][n - 1].getDistance(ball);
                 if (short_distance > temp)
@@ -367,7 +367,7 @@ public:
                 }
             }
 
-            if (available[3]==0&&!brd[m][n + 1].getExist())
+            if (available[3] == 0 && !brd[m][n + 1].getExist())
             {
                 temp = brd[m][n + 1].getDistance(ball);
                 if (short_distance > temp)
@@ -377,7 +377,7 @@ public:
                 }
             }
 
-            if (available[4]==0&&!brd[m + 1][n].getExist())
+            if (available[4] == 0 && !brd[m + 1][n].getExist())
             {
                 temp = brd[m + 1][n].getDistance(ball);
                 if (short_distance > temp)
@@ -387,7 +387,7 @@ public:
                 }
             }
 
-            if (available[5]==0&&!brd[m + 1][n + 1].getExist())
+            if (available[5] == 0 && !brd[m + 1][n + 1].getExist())
             {
                 temp = brd[m + 1][n + 1].getDistance(ball);
                 if (short_distance > temp)
@@ -436,60 +436,60 @@ public:
                 break;
             }
         }
-        
-        for (int i = sizeof(brd)/sizeof(brd[0])-1; i>= rBoundary; i--) {
-            for (int j = 0; j<sizeof(brd[0])/sizeof(CSphere); j++) {
+
+        for (int i = sizeof(brd) / sizeof(brd[0]) - 1; i >= rBoundary; i—) {
+            for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
                 if (brd[i][j].getExist()) {
                     rBoundary = i;
                 }
             }
         }
 
-         return value;
+        return value;
     }
 
     void chEmpty(int m, int n) {
-        if(brd[m][n].getExist()){
+        if (brd[m][n].getExist()) {
             if (!brd[m][n].getDeflag()) {
                 brd[m][n].setDeflag(1);
-                
+
                 if (n - 1 >= 0)
                     chEmpty(m, n - 1);
-                
+
                 if (m % 2 == 0) {
-                    if (m-1 >= 0) {
-                        if (n-1 >= 0)
+                    if (m - 1 >= 0) {
+                        if (n - 1 >= 0)
                             chEmpty(m - 1, n - 1);
-                        
+
                         chEmpty(m - 1, n);
                     }
-                    
-                    if(n+1<sizeof(brd[0])/sizeof(CSphere))
+
+                    if (n + 1 < sizeof(brd[0]) / sizeof(CSphere))
                         chEmpty(m, n + 1);
-                    
-                    if(m+1<sizeof(brd)/sizeof(brd[0])){
+
+                    if (m + 1 < sizeof(brd) / sizeof(brd[0])) {
                         chEmpty(m + 1, n);
-                        
-                        if(n-1>=0)
+
+                        if (n - 1 >= 0)
                             chEmpty(m + 1, n - 1);
                     }
                 }//end of even m
-                
+
                 else if (m % 2 == 1) {
-                    if(m-1>=0){
+                    if (m - 1 >= 0) {
                         chEmpty(m - 1, n);
-                        
-                        if(n+1<sizeof(brd[0])/sizeof(CSphere))
+
+                        if (n + 1 < sizeof(brd[0]) / sizeof(CSphere))
                             chEmpty(m - 1, n + 1);
                     }
-                    
-                    if(n+1<sizeof(brd[0])/sizeof(CSphere)){
+
+                    if (n + 1 < sizeof(brd[0]) / sizeof(CSphere)) {
                         chEmpty(m, n + 1);
-                        
-                        if(m+1<sizeof(brd)/sizeof(brd[0]))
+
+                        if (m + 1 < sizeof(brd) / sizeof(brd[0]))
                             chEmpty(m + 1, n + 1);
                     }
-                    if(m+1<sizeof(brd)/sizeof(brd[0]))
+                    if (m + 1 < sizeof(brd) / sizeof(brd[0]))
                         chEmpty(m + 1, n);
                 }//end of odd m
             }
@@ -497,16 +497,16 @@ public:
     }
 
     int bDetach() {
-        
-       /* for (int i = 0; i<sizeof(brd[0])/sizeof(CSphere); i++) {
+
+        for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
             chEmpty(0, i);
         }
-        
-        int hit=0;
-        
-        for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
-            for (int j = 0; j<sizeof(brd[0])/sizeof(CSphere); j++) {
-                if (brd[i][j].getDeflag() != brd[i][j].getExist() ) {
+
+        int hit = 0;
+
+        for (int i = 0; i < sizeof(brd) / sizeof(brd[0]); i++) {
+            for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
+                if (brd[i][j].getDeflag() != brd[i][j].getExist()) {
                     brd[i][j].setExist(false);
                     brd[i][j].setColor(d3d::MAGENTA);
                     hit++;
@@ -572,6 +572,3 @@ public:
     }
 
 };
-
-
-
