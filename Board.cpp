@@ -510,9 +510,9 @@ public:
                 if (brd[i][j].getDeflag() != brd[i][j].getExist() ) {
                     brd[i][j].setExist(false);
                     brd[i][j].setColor(d3d::MAGENTA);
-                    brd[i][j].setDeflag(0);
                     hit++;
                 }
+                brd[i][j].setDeflag(0);
             }
         }
         return hit;
