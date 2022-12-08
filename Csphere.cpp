@@ -1,4 +1,4 @@
-﻿#include "CSphere.h"
+#include "CSphere.h"
 
 CSphere::CSphere(void)
 {
@@ -246,11 +246,11 @@ void CSphere::setExist(bool a)
 }
 
 int CSphere::getChflag() {
-    return this->chflag;
+    return this->chFlag;
 }
 
 void CSphere::setChflag(int val) {
-    chflag = val;
+    chFlag = val;
 }
 
 float CSphere::getDistance(CSphere& ball)
