@@ -382,7 +382,9 @@ bool Display(float timeDelta)
                         int temp_xz = makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
                         int temp_x = temp_xz / 10;
                         int temp_z = temp_xz % 10;
-                        int temp_score = makeBoard.destroy(temp_x, temp_z, g_shoot_ball[shootnum - 1]);
+                        int temp_score = 0;
+                        temp_score = makeBoard.destroy(temp_x, temp_z, g_shoot_ball[shootnum - 1]);
+          
                         g_screen.UpdateScore(temp_score * 100);
                         g_screen.SetPlay();
                         if (shootnum > 0) {
@@ -560,9 +562,9 @@ bool Display(float timeDelta)
             LPD3DXFONT tabf;
             D3DXCreateFont(Device, 50, 0, FW_NORMAL, 1, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
                 DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &tabf);
-            char tabch[100] = "                              PRESS TAB TO PAUSE";
+            char tabch[100] = " PRESS TAB TO PAUSE";
             RECT tabrt;
-            SetRect(&tabrt, g_screen.Gx()+200, g_screen.Gy(), 0, 0);
+            SetRect(&tabrt, g_screen.Gx()+400, g_screen.Gy(), 0, 0);
             tabf->DrawText(NULL, tabch, -1, &tabrt, DT_NOCLIP, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
             tabf->Release();
         }

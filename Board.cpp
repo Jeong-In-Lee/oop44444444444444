@@ -9,8 +9,7 @@ using namespace std;
 class Board {
 
 private:
-    CSphere brd[10][8];
-    CSphere extBrd [15];
+    CSphere brd[18][8];
     float x_bdCtr, y_bdCtr, z_bdCtr;
     int rBoundary;
     int empFl = -2;
@@ -79,7 +78,7 @@ public:
                 }
             }
         }
-        if (hit >= 2)
+        if (hit >= 3)
         {
             for (int i = 0; i <= rBoundary; i++) {
                 for (int j = 0; j < sizeof(brd[0]) / sizeof(CSphere); j++) {
@@ -92,7 +91,7 @@ public:
             }
             
             //hit += bDetach();
-            hit++;
+            //hit++;
             
         }
         else
