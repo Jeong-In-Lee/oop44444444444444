@@ -132,7 +132,7 @@ public:
                 }
 
                 if (m % 2 == 0) {
-                    if (m <= 10 ) { //rb                        
+                    if (m <= 10 ) { //rb
                         chNeighball(m + 1, n, col);
                         if (n > 0)
                             chNeighball(m + 1, n - 1, col);
@@ -217,7 +217,7 @@ public:
         {
             float short_distance = 1000;
             float temp;
-            int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under 
+            int pos = 6; // 0 left above 1 right above 2 left 3 right 4 left under 5 right under
 
             if(n==0)
                 available[0] = available[2] = available[4] = 1;
@@ -572,5 +572,6 @@ public:
     }
 
 };
+
 
 
