@@ -40,7 +40,7 @@ D3DXMATRIX g_mProj;
 #define PI 3.14159265
 #define M_HEIGHT 0.01
 #define DECREASE_RATE 0.9982
-#define SHOOTNUM 10  // 제한 횟수
+#define SHOOTNUM 30  // 제한 횟수
 
 
 // -----------------------------------------------------------------------------
@@ -372,6 +372,18 @@ bool Display(float timeDelta)
         int tx = -1;  
         int ty = -1;
 
+        if (g_legowall[0].hasIntersected(g_shoot_ball[shootnum - 1]))
+        {
+            makeBoard.attachWall(g_shoot_ball[shootnum - 1]);
+            g_shoot_ball[shootnum - 1].destroy();
+            if (shootnum > 0) {
+                shootnum--;
+            }
+            spacepress = false;
+            //loopcheck = false;
+        }
+
+
         for (i = 0; i < makeBoard.getRow(); i++) {
             if (!loopcheck) {
                 break;
@@ -446,16 +458,7 @@ bool Display(float timeDelta)
         // s 가 board에 닿으면 (board에 있는 모든 공이랑 hitby해서 좌표 저장되면)
         // board에 붙기
         // shoot--
-        if (g_legowall[0].hasIntersected(g_shoot_ball[shootnum - 1]))
-        {
-            makeBoard.attachWall(g_shoot_ball[shootnum - 1]);
-            g_shoot_ball[shootnum - 1].destroy();
-            if (shootnum > 0) {
-                shootnum--;
-            }
-            spacepress = false;
-            //loopcheck = false;
-        }
+    
         // 
         // 
         // board 공들 draw하기
