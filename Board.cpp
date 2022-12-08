@@ -13,7 +13,7 @@ private:
     CSphere extBrd [15];
     float x_bdCtr, y_bdCtr, z_bdCtr;
     int rBoundary;
-    int empFl = -3;
+    int empFl = -2;
 
 public:
 
