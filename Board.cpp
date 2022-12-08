@@ -488,22 +488,23 @@ public:
 
     int bDetach() {
 
-        for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
+        for (int i = 0; i < sizeof(brd) / sizeof(brd[0]); i++) {
             chEmpty(i, 0);
-            chEmpty(i, sizeof(brd[0])/sizeof(CSphere)-1);
+            chEmpty(i, sizeof(brd[0]) / sizeof(CSphere) - 1);
         }
-        for (int i = 0; i<sizeof(brd[0])/sizeof(CSphere); i++) {
-            chEmpty(0, i)
+        for (int i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
+            chEmpty(0, i);
         }
-        
-        for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
+
+        /*for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
             for (int j = 0; j<sizeof(brd[0])/sizeof(CSphere); j++) {
                 if (brd[i][j].deFlag != brd[i][j].getExist() ) {
                     <#statements#>
                 }
             }
-        }
-        return hit;
+        }*/
+        //return hit;
+        return 0;
     }
 
     void resume(int col, int row, float x, float y, float z, int color, bool exist)
