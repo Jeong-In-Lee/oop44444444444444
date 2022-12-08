@@ -561,6 +561,16 @@ public:
         return sizeof(brd[0]) / sizeof(CSphere);
     }
 
+    bool checkEndline()
+    {
+        for (int i = 0; i < getCol(); i++)
+        {
+            if (brd[getRow() - 1][i].getExist())
+                return true;
+        }
+        return false;
+    }
+
 };
 
 

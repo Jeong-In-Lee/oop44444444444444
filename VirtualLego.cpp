@@ -1,6 +1,4 @@
-﻿//test
-
-#include "d3dUtility.h"
+﻿#include "d3dUtility.h"
 #include <vector>
 #include <ctime>
 #include <cstdlib>
@@ -11,12 +9,10 @@
 #include<string.h>
 #include "CWall.h"
 #include "Csphere.h"
-// #include "Board.cpp"
+//#include "Board.cpp"
 #include "Saveload.cpp"
 
 using namespace std;
-
-
 
 IDirect3DDevice9* Device = NULL;
 
@@ -107,6 +103,11 @@ public:
         }
     }
     void UpdateScore(int newscore) { this->score = this->score + newscore; }
+
+    void GameOver() {
+        this->ShowResult();
+        this->str = " Game Over\n ESC TO EXIT";
+    }
 };
 
 
@@ -215,7 +216,7 @@ CScreen g_screen;
 CSphere   g_target_blueball;
 CSphere g_shoot_ball[SHOOTNUM];
 Board makeBoard;
-
+Saveload save;
 
 int shootnum = SHOOTNUM;
 bool spacepress = false;
@@ -344,6 +345,10 @@ bool Display(float timeDelta)
     {
         Device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00afafaf, 1.0f, 0);
         Device->BeginScene();
+
+        if (makeBoard. checkEndline()) {  // 게임 오버됐는지 확인하는 함수 (아마 보드 작업?
+            g_screen.GameOver();
+        }
 
         if (shootnum > 0) {
             g_shoot_ball[shootnum - 1].ballUpdate(timeDelta);
@@ -581,7 +586,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     break;
                 }
                 else if (g_screen.Gselectmode() == 1) {  // RELOAD
-                    gameload(makeBoard);
+                    save.gameload(makeBoard);
                     // RELOAD 함수 추가해주세요~~
                     break;
                 }
@@ -614,7 +619,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     break;
                 }
                 else if (g_screen.Gselectmode() == 1) {  // SAVE
-                    gamesave(makeBoard);
+                    save.gamesave(makeBoard);
                     // SAVE 함수 추가해주세요~~
                     break;
                 }
