@@ -10,7 +10,7 @@ using namespace std;
 class Board {
 
 private:
-    CSphere brd[15][8];
+    CSphere brd[13][8];
     float x_bdCtr, y_bdCtr, z_bdCtr;
     int rBoundary;
 
