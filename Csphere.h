@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "d3dUtility.h"
 
 #define M_RADIUS 0.35   // ball radius
@@ -13,7 +13,8 @@ private:
     float               m_velocity_x;
     float               m_velocity_z;
     bool ball_exist = true;
-    int chflag=0;
+    int chFlag = 0;
+    int deFlag = 0;
 
     int ball_color; // 1 - 노랑 2- 빨강 3- 파랑 4- 초록
     float pre_center_x, pre_center_z;

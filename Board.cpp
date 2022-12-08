@@ -447,7 +447,7 @@ public:
         return value;
     }
 
-    void chEmpty(int m, int n, int* hMax, int* wMin, int* wMax) {
+    void chEmpty(int m, int n) {
 
         if (brd[m][n].getColor() == 0) {
             brd[m][n].setChflag(empFl);
@@ -489,32 +489,18 @@ public:
 
     int bDetach() {
 
-        int i;
-        int* min;
-        int* max;
-        int* hei;
-        int hit = 0;
-        for (i = 0; i < sizeof(brd[0]) / sizeof(CSphere); i++) {
-            if (brd[rBoundary][i].getExist() == 0)
-                break;
+        for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
+            chEmpty(i, 0);
+            chEmpty(i, sizeof(brd[0])/sizeof(CSphere)-1);
         }
-
-        *hei = rBoundary;
-        *min = i;
-        *max = i;
-
-        chEmpty(rBoundary, i, hei, min, max);
-
-        if (*hei < rBoundary && *min < *max) {
-            for (int k = *hei; k <= rBoundary; k++) {
-                for (int j = *min; j <= *max; j++) {
-                    //�Ͷ߸���
-                    if (brd[k][j].getChflag() == -2)
-                    {
-                        brd[k][j].setExist(false);
-                        brd[k][j].setColor(d3d::MAGENTA);
-                        hit++;
-                    }
+        for (int i = 0; i<sizeof(brd[0])/sizeof(CSphere); i++) {
+            chEmpty(0, i)
+        }
+        
+        for (int i = 0; i<sizeof(brd)/sizeof(brd[0]); i++) {
+            for (int j = 0; j<sizeof(brd[0])/sizeof(CSphere); j++) {
+                if (brd[i][j].deFlag != brd[i][j].getExist() ) {
+                    <#statements#>
                 }
             }
         }
