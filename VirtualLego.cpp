@@ -17,8 +17,8 @@ using namespace std;
 IDirect3DDevice9* Device = NULL;
 
 // window size
-const int Width = 1024; //1024
-const int Height = 768; //768
+const int Width = 600 ; //1024
+const int Height = 800; //768
 
 #define BLOCKNUM 54
 
@@ -496,7 +496,7 @@ bool Display(float timeDelta)
 
         for (i = 0; i < 3; i++) {
             g_legowall[i].draw(Device, g_mWorld);
-            // g_sphere[i].draw(Device, g_mWorld);
+            g_sphere[i].draw(Device, g_mWorld);
         }
 
         if (shootnum > 0){
@@ -507,7 +507,7 @@ bool Display(float timeDelta)
         if (forsleep > 0) {
             forsleep--;
             if (forsleep == 0) {
-                temp_score = makeBoard.bDetach();
+                //temp_score = makeBoard.bDetach();
                 g_screen.UpdateScore(temp_score*100);
                 g_screen.SetPlay();
                 spacepress = false;
