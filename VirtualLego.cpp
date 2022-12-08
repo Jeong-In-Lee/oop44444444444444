@@ -17,8 +17,8 @@ using namespace std;
 IDirect3DDevice9* Device = NULL;
 
 // window size
-const int Width = 1024;
-const int Height = 768;
+const int Width = 1024; //1024
+const int Height = 768; //768
 
 #define BLOCKNUM 54
 
@@ -252,8 +252,8 @@ bool Setup()
     if (false == g_legoPlane.create(Device, -1, -1, 6.4, 0.03f, 9, d3d::GREEN)) return false;
     g_legoPlane.setPosition(0.0f, -0.0006f / 5, 0.0f);
 
-    if (false == g_legoLine.create(Device, -1, -1, 6.4, 0.01f, 0.1f, d3d::VIOLET)) return false;
-    g_legoLine.setPosition(0.0f, 0.03012, -4.0f);
+    if (false == g_legoLine.create(Device, -1, -1, 6.4, 0.01f, 0.1f, d3d::BLACK)) return false;
+    g_legoLine.setPosition(0.0f, 0.03012, -2.5f);
 
     // create walls and set the position. note that there are four walls
     if (false == g_legowall[0].create(Device, -1, -1, 6.6f, 0.3f, 0.12f, d3d::DARKRED)) return false; // 현재 가로 기준 위쪽 & 순서대로 가로 높이 세로
@@ -273,7 +273,7 @@ bool Setup()
     }
 
     // create blue ball for set direction
-    if (false == g_target_blueball.create(Device, d3d::WHITE)) return false;
+    if (false == g_target_blueball.create(Device, d3d::GRAY)) return false;
     g_target_blueball.setCenter(0, (float)M_RADIUS, 0);
 
     random_device rd;
@@ -306,7 +306,7 @@ bool Setup()
         return false;
 
     // Position and aim the camera.
-    D3DXVECTOR3 pos(0.0f, 8.0f, -8.0f);
+    D3DXVECTOR3 pos(0.0f, 12.0f, -1.0f);
     D3DXVECTOR3 target(0.0f, 0.0f, 0.0f);
     D3DXVECTOR3 up(0.0f, 2.0f, 0.0f);
     D3DXMatrixLookAtLH(&g_mView, &pos, &target, &up);
