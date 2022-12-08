@@ -69,7 +69,6 @@ public:
         int col = ball.getColor();
         this->chNeighball(b2Ch/10, b2Ch%10, col);
 
-        //�ٿ���� �� ����ϴ� �ݺ���
         int hit = 0;
         
         // �Ͷ߸��� �ݺ���
