@@ -89,7 +89,7 @@ public:
                 }
             }
             
-            //hit += bDetach();
+            hit += bDetach();
             //hit++;
             
         }
