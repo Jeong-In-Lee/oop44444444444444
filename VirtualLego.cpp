@@ -381,8 +381,10 @@ bool Display(float timeDelta)
                     if (makeBoard.getBall(i, j).hasIntersected(g_shoot_ball[shootnum - 1])) {
                         int temp_xz = makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
                         int temp_x = temp_xz / 10;
-                        int temp_y = temp_xz % 10;
-                        int temp_score = makeBoard.destroy(temp_x, temp_xz, g_shoot_ball[shootnum - 1]);
+                        int temp_z = temp_xz % 10;
+                        int temp_score = makeBoard.destroy(temp_x, temp_z, g_shoot_ball[shootnum - 1]);
+                        g_screen.UpdateScore(temp_score * 100);
+                        g_screen.SetPlay();
                         if (shootnum > 0) {
                             shootnum--;
                         }
