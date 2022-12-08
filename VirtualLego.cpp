@@ -250,8 +250,8 @@ bool Setup()
     if (false == g_legoPlane.create(Device, -1, -1, 6.4, 0.03f, 9, d3d::GREEN)) return false;
     g_legoPlane.setPosition(0.0f, -0.0006f / 5, 0.0f);
 
-    if (false == g_legoLine.create(Device, -1, -1, 6.4, 0.03f, 0.01f, d3d::VIOLET)) return false;
-    g_legoLine.setPosition(0.0f, -0.0006f / 5, 6.5f);
+    if (false == g_legoLine.create(Device, -1, -1, 6.4, 0.01f, 0.01f, d3d::VIOLET)) return false;
+    g_legoLine.setPosition(0.0f, 0.03012, 6.5f);
 
     // create walls and set the position. note that there are four walls
     if (false == g_legowall[0].create(Device, -1, -1, 6.6f, 0.3f, 0.12f, d3d::DARKRED)) return false; // 현재 가로 기준 위쪽 & 순서대로 가로 높이 세로
