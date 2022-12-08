@@ -3,13 +3,14 @@
 #include "CWall.h"
 #include "CSphere.h"
 #include <random>
+#include <windows.h>
 
 using namespace std;
 
 class Board {
 
 private:
-    CSphere brd[18][8];
+    CSphere brd[15][8];
     float x_bdCtr, y_bdCtr, z_bdCtr;
     int rBoundary;
 
@@ -89,7 +90,8 @@ public:
                 }
             }
             
-            hit += bDetach();
+            //Sleep(500);
+            //hit += bDetach();
             //hit++;
             
         }
@@ -178,7 +180,7 @@ public:
         }
     }
 
-    void attachWall(CSphere& ball)
+    int attachWall(CSphere& ball)
     {
         float short_distance=1000;
         float temp;
@@ -199,6 +201,7 @@ public:
         brd[0][pos].setExist(true);
         brd[0][pos].revColor(ball.getColor());
         brd[0][pos].setChflag(0);
+        return pos;
     }
     
     int bAttach(int m, int n, CSphere& ball) {
@@ -442,7 +445,7 @@ public:
             }
         }
 
-        return value;
+         return value;
     }
 
     void chEmpty(int m, int n) {

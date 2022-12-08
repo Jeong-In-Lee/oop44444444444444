@@ -219,6 +219,8 @@ CSphere g_shoot_ball[SHOOTNUM];
 Board makeBoard;
 Saveload save;
 
+int hjj = 0;
+int forsleep = 0;
 int shootnum = SHOOTNUM;
 bool spacepress = false;
 float g_vx = 0;
@@ -250,8 +252,8 @@ bool Setup()
     if (false == g_legoPlane.create(Device, -1, -1, 6.4, 0.03f, 9, d3d::GREEN)) return false;
     g_legoPlane.setPosition(0.0f, -0.0006f / 5, 0.0f);
 
-    if (false == g_legoLine.create(Device, -1, -1, 6.4, 0.01f, 0.01f, d3d::VIOLET)) return false;
-    g_legoLine.setPosition(0.0f, 0.03012, 6.5f);
+    if (false == g_legoLine.create(Device, -1, -1, 6.4, 0.01f, 0.1f, d3d::VIOLET)) return false;
+    g_legoLine.setPosition(0.0f, 0.03012, -4.0f);
 
     // create walls and set the position. note that there are four walls
     if (false == g_legowall[0].create(Device, -1, -1, 6.6f, 0.3f, 0.12f, d3d::DARKRED)) return false; // 현재 가로 기준 위쪽 & 순서대로 가로 높이 세로
@@ -343,6 +345,7 @@ bool Display(float timeDelta)
     int i = 0;
     int j = 0;
     int screen = 0;
+    int temp_score = 0;
     
     if (shootnum < 1) {
         g_screen.ShowResult();
@@ -374,12 +377,23 @@ bool Display(float timeDelta)
 
         if (g_legowall[0].hasIntersected(g_shoot_ball[shootnum - 1]))
         {
-            makeBoard.attachWall(g_shoot_ball[shootnum - 1]);
+            int temppose=makeBoard.attachWall(g_shoot_ball[shootnum - 1]);
             g_shoot_ball[shootnum - 1].destroy();
+            //int temp_score = 0;
+            temp_score = makeBoard.destroy(0, temppose, g_shoot_ball[shootnum - 1]);
+            if (temp_score > 0) {
+                forsleep = 30;
+            }
+            else {
+                spacepress = false;
+            }
+
             if (shootnum > 0) {
                 shootnum--;
             }
-            spacepress = false;
+            g_screen.UpdateScore(temp_score * 100);
+            g_screen.SetPlay();
+            //spacepress = false;
             //loopcheck = false;
         }
 
@@ -394,16 +408,21 @@ bool Display(float timeDelta)
                         int temp_xz = makeBoard.bAttach(i, j, g_shoot_ball[shootnum - 1]);
                         int temp_x = temp_xz / 10;
                         int temp_z = temp_xz % 10;
-                        int temp_score = 0;
+                        //int temp_score = 0;
                         temp_score = makeBoard.destroy(temp_x, temp_z, g_shoot_ball[shootnum - 1]);
-          
+                        if (temp_score > 0) {
+                            forsleep = 30;
+                        }
+                        else {
+                            spacepress = false;
+                        }
                         g_screen.UpdateScore(temp_score * 100);
                         g_screen.SetPlay();
                         if (shootnum > 0) {
                             shootnum--;
                         }
                         loopcheck = false;
-                        spacepress = false;
+                        //spacepress = false;
                         break;
 
 
@@ -485,8 +504,17 @@ bool Display(float timeDelta)
         }
 
         makeBoard.draw(Device, g_mWorld);
-
+        if (forsleep > 0) {
+            forsleep--;
+            if (forsleep == 0) {
+                temp_score = makeBoard.bDetach();
+                g_screen.UpdateScore(temp_score*100);
+                g_screen.SetPlay();
+                spacepress = false;
+            }
+        }
         g_target_blueball.draw(Device, g_mWorld);
+        g_legoLine.draw(Device, g_mWorld);
         g_light.draw(Device);
 
 
@@ -555,6 +583,9 @@ bool Display(float timeDelta)
             char fch[100];
             string a = "LEFT : ";
             a += to_string(shootnum);
+            a += " ";
+            a += to_string(hjj);
+            //a += to_string(forsleep);
             if (!spacepress) {
                 a += "\nREADY";
             }
@@ -565,9 +596,9 @@ bool Display(float timeDelta)
             LPD3DXFONT tabf;
             D3DXCreateFont(Device, 50, 0, FW_NORMAL, 1, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
                 DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &tabf);
-            char tabch[100] = " PRESS TAB TO PAUSE";
+            char tabch[100] = "PRESS TAB TO PAUSE";
             RECT tabrt;
-            SetRect(&tabrt, g_screen.Gx()+400, g_screen.Gy(), 0, 0);
+            SetRect(&tabrt, g_screen.Gx()+500, g_screen.Gy(), 0, 0);
             tabf->DrawText(NULL, tabch, -1, &tabrt, DT_NOCLIP, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
             tabf->Release();
         }
@@ -688,6 +719,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     isReset = false;
                 }
                 g_screen.ShowResult();
+                isReset = false;
                 break;
 
             case VK_TAB:
@@ -705,6 +737,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             case VK_SPACE:    // space를 누르면 white_ball 위에 있던 red_ball의 m_is_used()값이 바뀌면서 위로 움직임
                 if (isReset) {
                     isReset = false;
+                    hjj += 1;
                 }
                 else {
                     if (!spacepress) {
@@ -718,6 +751,8 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         //double distance = sqrt(pow(targetpos.x - whitepos.x, 2) + pow(targetpos.z - whitepos.z, 2));
                         g_shoot_ball[shootnum - 1].setPower(5 * cos(theta), 5 * sin(theta));
                         spacepress = true;
+                        hjj = 0;
+                        isReset = false;
 
                         break;
                     }
@@ -763,6 +798,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 old_y = new_y;
 
                 move = WORLD_MOVE;
+                isReset = false;
                 break;
             }
             break;
